@@ -2,5 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/WebAppSandbox/EFExample/bin/Debug/net6.0
+/.vs
+/WebAppSandbox/.vs
+/WebAppSandbox/EFExample/bin/Debug/
 /WebAppSandbox/EFExample/obj
