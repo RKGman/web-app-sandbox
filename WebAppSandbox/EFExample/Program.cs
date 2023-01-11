@@ -10,6 +10,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+builder.Services.AddAuthentication().AddGoogle(options =>
+{
+    // TODO: Get these values passed in from secrets file
+    options.ClientId = "<CLIENT_ID>";
+    options.ClientSecret = "CLIENT_SECRET";
+});
+
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
