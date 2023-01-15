@@ -26,6 +26,7 @@ import { GoogleLoginProvider } from 'angularx-social-login';
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
               // replace this with your google client id			
+              // TODO: Read this from a secrets file
               '<CLIENT_ID>'
             )
           }

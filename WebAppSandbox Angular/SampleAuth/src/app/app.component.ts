@@ -22,9 +22,9 @@ export class AppComponent {
 	});
   }
 
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x: any) => console.log(x));
-  }
+  // signInWithGoogle(): void {
+  //   this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x: any) => console.log(x));
+  // }
 
   signOut(): void {
     this.authService.signOut();
