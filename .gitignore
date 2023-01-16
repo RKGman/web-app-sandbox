@@ -7,3 +7,8 @@
 /WebAppSandbox/EFExample/bin/Debug/
 /WebAppSandbox/EFExample/obj
 WebAppSandbox Angular/SampleAuth/.vscode/
+WebAppSandbox .NET/.vs/WebAppSandbox/config/applicationhost.config
+WebAppSandbox .NET/.vs/
+WebAppSandbox .NET/EFExample/obj/
+WebAppSandbox .NET/AuthExample/obj/
+WebAppSandbox .NET/AuthExample/bin/

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFExample", "EFExample\EFExample.csproj", "{D3802760-B694-44E5-B1BB-78F301653302}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFExample", "EFExample\EFExample.csproj", "{D3802760-B694-44E5-B1BB-78F301653302}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthExample", "AuthExample\AuthExample.csproj", "{F3D37958-F30E-46F1-8A98-7E89ED425661}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D3802760-B694-44E5-B1BB-78F301653302}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3802760-B694-44E5-B1BB-78F301653302}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3802760-B694-44E5-B1BB-78F301653302}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3D37958-F30E-46F1-8A98-7E89ED425661}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3D37958-F30E-46F1-8A98-7E89ED425661}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3D37958-F30E-46F1-8A98-7E89ED425661}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3D37958-F30E-46F1-8A98-7E89ED425661}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
