@@ -3,37 +3,31 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
-import { GoogleLoginProvider } from 'angularx-social-login';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material.module';
+import { RouterModule } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
 	  HttpClientModule,
     AppRoutingModule,
-	  SocialLoginModule
+    BrowserAnimationsModule,
+    MaterialModule,
+    HttpClientModule,
+    RouterModule.forRoot([
+      { path: '', component: LoginComponent, pathMatch: 'full'},
+      { path: 'logout', component: LogoutComponent }
+    ])
   ],
-  providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              // replace this with your google client id			
-              // TODO: Read this from a secrets file
-              '<CLIENT_ID>'
-            )
-          }
-        ]
-      } as SocialAuthServiceConfig,
-    }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
