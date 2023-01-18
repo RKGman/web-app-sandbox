@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     apiUrl: "https://localhost:7274/",
-    clientId: "<CLIENT_ID>"
+    clientId: "<CLIENT_ID>" // TODO: Read this from a secrets file
   };
   
   /*

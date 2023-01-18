@@ -25,7 +25,7 @@ namespace AuthService.Controllers
             GoogleJsonWebSignature.ValidationSettings settings = new GoogleJsonWebSignature.ValidationSettings();
 
             // Change this to your google client ID
-            settings.Audience = new List<string>() { "<CLIENT_ID>" };
+            settings.Audience = new List<string>() { "<CLIENT_ID>" }; // TODO: Read this from a secrets file
 
             GoogleJsonWebSignature.Payload payload = GoogleJsonWebSignature.ValidateAsync(data.IdToken, settings).Result;
             return Ok(new { AuthToken = _jwtGenerator.CreateUserAuthToken(payload.Email) });

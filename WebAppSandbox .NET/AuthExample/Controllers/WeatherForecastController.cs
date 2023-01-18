@@ -1,7 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthExample.Controllers
-{ // TODO: Remove this example
+{ 
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -18,6 +19,7 @@ namespace AuthExample.Controllers
             _logger = logger;
         }
 
+        [Authorize] // This now requires that a JWT token is passed
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
