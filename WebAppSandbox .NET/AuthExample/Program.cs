@@ -4,28 +4,22 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using AuthExample.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// For Entity Framework
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnStr")));
 
-// Configures the ASP.NET Core backend to use the config, allow access from the Angular client, etc...
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAngularDevClient",
-      builder =>
-      {
-          builder
-          .WithOrigins("http://localhost:4200")
-          .AllowAnyHeader()
-          .AllowAnyMethod();
-      });
-});
+// For Identity
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -70,6 +64,24 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
+
+// Configures the ASP.NET Core backend to use the config, allow access from the Angular client, etc...
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularDevClient",
+      builder =>
+      {
+          builder
+          .WithOrigins("http://localhost:4200")
+          .AllowAnyHeader()
+          .AllowAnyMethod();
+      });
+});
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 //builder.Services.ConfigureOptions<ConfigureJwtBearerOptions>();
 
