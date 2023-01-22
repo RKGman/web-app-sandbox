@@ -13,3 +13,4 @@ WebAppSandbox .NET/EFExample/obj/
 WebAppSandbox .NET/AuthExample/obj/
 WebAppSandbox .NET/AuthExample/bin/
 WebAppSandbox .NET/EFExample/bin/
+node_modules
