@@ -22,6 +22,34 @@ namespace AuthExample.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("AuthExample.Models.TaskModel", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TaskId"), 1L, 1);
+
+                    b.Property<string>("TaskDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("TaskName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("TaskStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TaskId");
+
+                    b.ToTable("Tasks");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthExample.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230120041228_Initial")]
+    [Migration("20230123132342_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,34 @@ namespace AuthExample.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("AuthExample.Models.TaskModel", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TaskId"), 1L, 1);
+
+                    b.Property<string>("TaskDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("TaskName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("TaskStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TaskId");
+
+                    b.ToTable("Tasks");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {

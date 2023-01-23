@@ -49,6 +49,22 @@ namespace AuthExample.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Tasks",
+                columns: table => new
+                {
+                    TaskId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TaskName = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    TaskDescription = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    TaskStatus = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tasks", x => x.TaskId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -210,6 +226,9 @@ namespace AuthExample.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Tasks");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
