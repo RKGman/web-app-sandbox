@@ -65,12 +65,6 @@ namespace AuthService.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
             }
 
-            //ApplicationUser appUser = new ApplicationUser()
-            //{
-
-            //};
-            //_context.Users.Add()
-
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
 

@@ -16,10 +16,10 @@ A sandbox to build some web apps.
 
         - For a basic example, we want to do the following:
 
-            - ❌ Sign Up / Add User
+            - ✔️Sign Up / Add User
             - ❌ Modify User Data
-            - ❌ Delete User Data
-            - (Bonus) Get List of Data Specific To User
+            - ✔️ Delete User Data
+            - ✔️ (Bonus) Get List of Data Specific To User
                 - Not sure, if a "Login" method is required on the API, or if AuthTokens suffice and client manages that "state"?
                 - This might include more CRUD operations / endpoints to manage some kind of list for a user
                 
