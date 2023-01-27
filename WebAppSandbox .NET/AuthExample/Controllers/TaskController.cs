@@ -22,7 +22,7 @@ namespace AuthExample.Controllers
         }
 
         // GET: api/Task
-        [HttpGet]
+        [HttpGet("getTasks")]
         public async Task<ActionResult<IEnumerable<TaskModel>>> GetTaskItems(string username)
         {
             var user = await _userManager.FindByNameAsync(username); 
