@@ -95,5 +95,41 @@ namespace AuthExample.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = e.Message });
             }
         }
+
+        // PATCH: api/Profile/updateBirthday/{username}
+        /// <summary>
+        /// For now this is just any string...
+        /// TODO: Determine what these roles will be... Should maybe only be Teacher/Coach, Student/Trainee, Admin?
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
+        [HttpPatch("updateRole/{username}")]
+        public async Task<IActionResult> UpdateRole(string username, [FromBody] string role)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+
+            if (user == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User does not exist! Please check user details and try again." });
+            }
+
+            var profile = await _context.Profiles.Where(profile => user.Id == profile.UserId).FirstOrDefaultAsync();
+
+            profile.Role = role;
+
+            _context.Entry(profile).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+
+                return StatusCode(StatusCodes.Status202Accepted);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = e.Message });
+            }
+        }
     }
 }
