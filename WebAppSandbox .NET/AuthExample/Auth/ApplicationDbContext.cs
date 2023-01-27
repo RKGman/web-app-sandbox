@@ -13,6 +13,8 @@ namespace AuthExample.Auth
 
         public DbSet<TaskModel> Tasks { get; set; }
 
+        public DbSet<ProfileModel> Profiles { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
