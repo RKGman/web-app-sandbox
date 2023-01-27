@@ -16,7 +16,7 @@ function App() {
 
   }, []);
 
-  const loginHandler = (email, password) => {
+  const loginHandler = () => {
     // TODO: Check email or password
     // Need to introduce google one tap
     
