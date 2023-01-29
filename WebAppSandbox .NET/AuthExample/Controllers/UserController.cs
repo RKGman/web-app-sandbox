@@ -1,11 +1,11 @@
 using AuthExample.Auth;
+using AuthExample.Interfaces;
 using AuthExample.Models;
-using AuthService.Utilities;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Net.Http.Headers;
 
 namespace AuthService.Controllers
 {
@@ -17,16 +17,16 @@ namespace AuthService.Controllers
 
         private readonly ApplicationDbContext _context;
 
-        private readonly JwtGenerator _jwtGenerator;
+        private readonly IJwtUtility _jwtUtility;
 
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public UserController(IConfiguration configuration, ApplicationDbContext context, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        public UserController(IConfiguration configuration, IJwtUtility jwtUtility, ApplicationDbContext context, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             _configuration = configuration;
             _context = context;
-            _jwtGenerator = new JwtGenerator(_configuration.GetValue<string>("JwtPrivateSigningKey"));
+            _jwtUtility= jwtUtility;
             _roleManager = roleManager;
             _userManager = userManager;
         }
@@ -41,13 +41,21 @@ namespace AuthService.Controllers
             settings.Audience = new List<string>() { _configuration.GetValue<string>("ClientId") };
 
             GoogleJsonWebSignature.Payload payload = GoogleJsonWebSignature.ValidateAsync(data.IdToken, settings).Result;
-            return Ok(new { AuthToken = _jwtGenerator.CreateUserAuthToken(payload.Email), payload.Email });
+            return Ok(new { AuthToken = _jwtUtility.CreateUserAuthToken(payload.Email), payload.Email });
         }
 
-        // [Authorize] // TODO: Maybe can set a debug configuration to allow this to work without authorization
+        [Authorize] // TODO: Maybe can set a debug configuration to allow this to work without authorization
         [HttpPost("registerUser")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserRequest data)
         {
+            // Validate the Source and JWT token; TODO: Consider making this middleware?
+            var authorization = Request.Headers[HeaderNames.Authorization];
+
+            if (!_jwtUtility.ValidateJwtSources(data.Email, authorization))
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, new Response { Status = "Error", Message = "Could not validate JWT and request source!" });
+            }
+
             var userExists = await _userManager.FindByNameAsync(data.Email);
 
             if (userExists != null)
@@ -95,10 +103,18 @@ namespace AuthService.Controllers
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost("deleteUser")]
         public async Task<IActionResult> DeleteUser([FromBody] DeleteUserRequest data)
         {
+            // Validate the Source and JWT token; TODO: Consider making this middleware?
+            var authorization = Request.Headers[HeaderNames.Authorization];
+
+            if (!_jwtUtility.ValidateJwtSources(data.Email, authorization))
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, new Response { Status = "Error", Message = "Could not validate JWT and request source!" });
+            }
+
             var user = await _userManager.FindByNameAsync(data.Email);
 
             if (user == null)

@@ -19,7 +19,7 @@ namespace AuthExample.Controllers
             _logger = logger;
         }
 
-        [Authorize] // This now requires that a JWT token is passed
+        [Authorize] // This now requires that a JWT token is passed, but there's no protected user data here as an example, we don't need to determine the JWT source and compare.
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
