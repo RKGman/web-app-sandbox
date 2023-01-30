@@ -14,3 +14,6 @@ WebAppSandbox .NET/AuthExample/obj/
 WebAppSandbox .NET/AuthExample/bin/
 WebAppSandbox .NET/EFExample/bin/
 node_modules
+WebAppSandbox .NET/AuthExampleTests/bin/Debug/net6.0/appsettings.Development.json
+WebAppSandbox .NET/AuthExampleTests/bin/
+WebAppSandbox .NET/AuthExampleTests/obj/
