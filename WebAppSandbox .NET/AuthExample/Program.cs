@@ -1,13 +1,12 @@
 //using AuthExample.Utilities;
+using AuthExample.Auth;
+using AuthExample.Interfaces;
+using AuthService.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using AuthExample.Auth;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -87,6 +86,12 @@ builder.Services.AddSwaggerGen();
 
 //// Inject the configuration so the public key is ued to validate the JWT
 //builder.Services.AddTransient<IConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>();
+
+// Add the services
+
+builder.Services.AddSingleton<IJwtUtility, JwtUtility>();
+
+// Build the app
 
 var app = builder.Build();
 

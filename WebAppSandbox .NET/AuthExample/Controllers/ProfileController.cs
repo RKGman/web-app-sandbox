@@ -1,13 +1,15 @@
 using AuthExample.Auth;
+using AuthExample.Interfaces;
 using AuthExample.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 
 namespace AuthExample.Controllers
 {
-    //[Authorize] //TODO: Determine how to protect users from manipulating other users?! Not sure if authorization token alone is enough; need to test
+    [Authorize] 
     [Route("api/[controller]")]
     [ApiController]
     public class ProfileController : ControllerBase
@@ -16,8 +18,11 @@ namespace AuthExample.Controllers
 
         private readonly UserManager<IdentityUser> _userManager;
 
-        public ProfileController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        private readonly IJwtUtility _jwtUtility;
+
+        public ProfileController(IJwtUtility jwtUtility, ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
+            _jwtUtility = jwtUtility;
             _context = context;
             _userManager = userManager;
         }
@@ -26,6 +31,14 @@ namespace AuthExample.Controllers
         [HttpGet("{username}")]
         public async Task<ActionResult<ProfileModel>> GetProfile(string username)
         {
+            // Validate the Source and JWT token; TODO: Consider making this middleware?
+            var authorization = Request.Headers[HeaderNames.Authorization];
+
+            if (!_jwtUtility.ValidateJwtSources(username, authorization))
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, new Response { Status = "Error", Message = "Could not validate JWT and request source!" });
+            }
+
             var user = await _userManager.FindByNameAsync(username);
 
             if (user == null)
@@ -42,6 +55,14 @@ namespace AuthExample.Controllers
         [HttpPatch("updateAboutMe/{username}")]
         public async Task<IActionResult> UpdateAboutMe(string username, [FromBody] string aboutMeText)
         {
+            // Validate the Source and JWT token; TODO: Consider making this middleware?
+            var authorization = Request.Headers[HeaderNames.Authorization];
+
+            if (!_jwtUtility.ValidateJwtSources(username, authorization))
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, new Response { Status = "Error", Message = "Could not validate JWT and request source!" });
+            }
+
             var user = await _userManager.FindByNameAsync(username);
 
             if (user == null)
@@ -71,6 +92,14 @@ namespace AuthExample.Controllers
         [HttpPatch("updateBirthday/{username}")]
         public async Task<IActionResult> UpdateBirthday(string username, [FromBody] DateTime birthday)
         {
+            // Validate the Source and JWT token; TODO: Consider making this middleware?
+            var authorization = Request.Headers[HeaderNames.Authorization];
+
+            if (!_jwtUtility.ValidateJwtSources(username, authorization))
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, new Response { Status = "Error", Message = "Could not validate JWT and request source!" });
+            }
+
             var user = await _userManager.FindByNameAsync(username);
 
             if (user == null)
@@ -107,6 +136,14 @@ namespace AuthExample.Controllers
         [HttpPatch("updateRole/{username}")]
         public async Task<IActionResult> UpdateRole(string username, [FromBody] string role)
         {
+            // Validate the Source and JWT token; TODO: Consider making this middleware?
+            var authorization = Request.Headers[HeaderNames.Authorization];
+
+            if (!_jwtUtility.ValidateJwtSources(username, authorization))
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, new Response { Status = "Error", Message = "Could not validate JWT and request source!" });
+            }
+
             var user = await _userManager.FindByNameAsync(username);
 
             if (user == null)

@@ -5,7 +5,11 @@ VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFExample", "EFExample\EFExample.csproj", "{D3802760-B694-44E5-B1BB-78F301653302}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthExample", "AuthExample\AuthExample.csproj", "{F3D37958-F30E-46F1-8A98-7E89ED425661}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthExample", "AuthExample\AuthExample.csproj", "{F3D37958-F30E-46F1-8A98-7E89ED425661}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D450BD25-2D3F-49FC-A265-07239B80A24F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthExampleTests", "AuthExampleTests\AuthExampleTests.csproj", "{A16EA98B-E3B4-47C3-AFC6-6536BFBF11AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +25,16 @@ Global
 		{F3D37958-F30E-46F1-8A98-7E89ED425661}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3D37958-F30E-46F1-8A98-7E89ED425661}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3D37958-F30E-46F1-8A98-7E89ED425661}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A16EA98B-E3B4-47C3-AFC6-6536BFBF11AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A16EA98B-E3B4-47C3-AFC6-6536BFBF11AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A16EA98B-E3B4-47C3-AFC6-6536BFBF11AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A16EA98B-E3B4-47C3-AFC6-6536BFBF11AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A16EA98B-E3B4-47C3-AFC6-6536BFBF11AC} = {D450BD25-2D3F-49FC-A265-07239B80A24F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3732996D-9BFB-4CAA-A330-A46D580613C1}

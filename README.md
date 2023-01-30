@@ -19,10 +19,11 @@ A sandbox to build some web apps.
             - ✔️Sign Up / Add User
             - ✔️ Modify User Data
             - ✔️ Delete User Data
+            - ✔️ Prevent users from being able to modify or access other user data. 
             - ✔️ (Bonus) Get List of Data Specific To User
                 - Not sure, if a "Login" method is required on the API, or if AuthTokens suffice and client manages that "state"?
                 - This might include more CRUD operations / endpoints to manage some kind of list for a user
-            - ❌ (Bonus) Basic unit tests to gate a deployment in the pipeline.
+            - ❌ (Bonus) Basic unit tests to gate a deployment in the pipeline.         
                 
 
 - ✔️ Create React App 

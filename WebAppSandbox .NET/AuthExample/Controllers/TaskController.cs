@@ -1,12 +1,15 @@
 using AuthExample.Auth;
+using AuthExample.Interfaces;
 using AuthExample.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 
 namespace AuthExample.Controllers
 {
-    //[Authorize] TODO: Determine how to protect users from manipulating other users?! Not sure if authorization token alone is enough; need to test
+    [Authorize] 
     [Route("api/[controller]")]
     [ApiController]
     public class TaskController : ControllerBase
@@ -15,8 +18,11 @@ namespace AuthExample.Controllers
 
         private readonly UserManager<IdentityUser> _userManager;
 
-        public TaskController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        private readonly IJwtUtility _jwtUtility;
+
+        public TaskController(IJwtUtility jwtUtility, ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
+            _jwtUtility = jwtUtility;
             _context = context;
             _userManager = userManager;
         }
@@ -25,6 +31,14 @@ namespace AuthExample.Controllers
         [HttpGet("getTasks")]
         public async Task<ActionResult<IEnumerable<TaskModel>>> GetTaskItems(string username)
         {
+            // Validate the Source and JWT token; TODO: Consider making this middleware?
+            var authorization = Request.Headers[HeaderNames.Authorization];
+
+            if (!_jwtUtility.ValidateJwtSources(username, authorization))
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, new Response { Status = "Error", Message = "Could not validate JWT and request source!" });
+            }
+
             var user = await _userManager.FindByNameAsync(username); 
 
             if (user == null)
@@ -39,8 +53,16 @@ namespace AuthExample.Controllers
 
         // GET: api/Task/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TaskModel>> GetTaskModel(int id)
+        public async Task<ActionResult<TaskModel>> GetTaskModel(string username, int id)
         {
+            // Validate the Source and JWT token; TODO: Consider making this middleware?
+            var authorization = Request.Headers[HeaderNames.Authorization];
+
+            if (!_jwtUtility.ValidateJwtSources(username, authorization))
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, new Response { Status = "Error", Message = "Could not validate JWT and request source!" });
+            }
+
             var taskModel = await _context.Tasks.FindAsync(id);
 
             if (taskModel == null)
@@ -54,8 +76,16 @@ namespace AuthExample.Controllers
         // PUT: api/Task/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTaskModel(int id, TaskModel task)
+        public async Task<IActionResult> PutTaskModel(string username, int id, TaskModel task)
         {
+            // Validate the Source and JWT token; TODO: Consider making this middleware?
+            var authorization = Request.Headers[HeaderNames.Authorization];
+
+            if (!_jwtUtility.ValidateJwtSources(username, authorization))
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, new Response { Status = "Error", Message = "Could not validate JWT and request source!" });
+            }
+
             if (id != task.TaskId)
             {
                 return BadRequest();
@@ -87,6 +117,14 @@ namespace AuthExample.Controllers
         [HttpPost]
         public async Task<ActionResult<TaskModel>> PostTaskModel(string username, string taskName, string taskDescription)
         {
+            // Validate the Source and JWT token; TODO: Consider making this middleware?
+            var authorization = Request.Headers[HeaderNames.Authorization];
+
+            if (!_jwtUtility.ValidateJwtSources(username, authorization))
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, new Response { Status = "Error", Message = "Could not validate JWT and request source!" });
+            }
+
             var user = await _userManager.FindByNameAsync(username); 
 
             if (user != null) {
@@ -108,8 +146,16 @@ namespace AuthExample.Controllers
 
         // DELETE: api/Task/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTaskModel(int id)
+        public async Task<IActionResult> DeleteTaskModel(string username, int id)
         {
+            // Validate the Source and JWT token; TODO: Consider making this middleware?
+            var authorization = Request.Headers[HeaderNames.Authorization];
+
+            if (!_jwtUtility.ValidateJwtSources(username, authorization))
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, new Response { Status = "Error", Message = "Could not validate JWT and request source!" });
+            }
+
             var taskModel = await _context.Tasks.FindAsync(id);
             if (taskModel == null)
             {
