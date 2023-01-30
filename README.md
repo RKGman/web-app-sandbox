@@ -25,5 +25,12 @@ A sandbox to build some web apps.
             - ❌ (Bonus) Basic unit tests to gate a deployment in the pipeline.
                 
 
-
-- ❌ Learn how to set up a _React_ application that interfaces with our _.NET Core API_
+- ✔️ Create React App 
+    - ❌ Figure out how to implement Google Authentication
+        - ✔️ Figure out how to implement login from Google
+        - ❌ Figure out how to implement logout from Google
+        - ❌ Get React routing working
+    - ❌ Learn how to set up a _React_ application that interfaces with our _.NET Core API_
+        - ❌ Set up API calls to .Net API
+    - ❌ Create components for basic list functionality
+    - ❌ Create components related to user profile (modifying user data)
