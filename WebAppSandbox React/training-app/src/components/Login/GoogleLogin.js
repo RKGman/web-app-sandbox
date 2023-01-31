@@ -1,34 +1,28 @@
 import React from 'react';
 
-import googleOneTap from 'google-one-tap';
-
-import Button from '../UI/Button/Button';
-
-import classes from './Login.module.css';
-
 const GoogleLogin = () => {
-  const options = {
-    client_id: '___CLIENT_ID___', // required
-    auto_select: false, // optional
-    cancel_on_tap_outside: false, // optional
-    context: 'signin', // optional
-  };
-
-  googleOneTap(options, (response) => {
-    // Send response to server
-    console.log(response);
-  });
-
   return (
     <React.Fragment>
-      <p>Login Below With Google</p>
+      <div
+        id='g_id_onload'
+        data-client_id='244658728792-9jpa8bht2tprd3rkoo1gh7jo2uf97fhf.apps.googleusercontent.com'
+        data-context='signin'
+        data-ux_mode='popup'
+        data-login_uri='http://localhost:3000'
+        data-auto_prompt='false'
+      ></div>
 
-      <Button className={classes.btn} onClick={googleOneTap}>
-        Google Login
-      </Button>
+      <div
+        className='g_id_signin'
+        data-type='standard'
+        data-shape='pill'
+        data-theme='filled_black'
+        data-text='signin_with'
+        data-size='medium'
+        data-logo_alignment='left'
+      ></div>
     </React.Fragment>
   );
 };
-
 
 export default GoogleLogin;
