@@ -67,13 +67,14 @@ builder.Services.AddAuthentication(options =>
 // Configures the ASP.NET Core backend to use the config, allow access from the Angular client, etc...
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngularDevClient",
+    options.AddPolicy("AllowDevClient",
       builder =>
       {
           builder
-          .WithOrigins("http://localhost:4200")
+          .WithOrigins("http://localhost:4200", "http://localhost:3000")
           .AllowAnyHeader()
-          .AllowAnyMethod();
+          .AllowAnyMethod()
+          .AllowCredentials();
       });
 });
 
@@ -108,7 +109,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // Use configuration policy set up in services to allow client
-app.UseCors("AllowAngularDevClient");
+app.UseCors("AllowDevClient");
 
 app.MapControllers();
 

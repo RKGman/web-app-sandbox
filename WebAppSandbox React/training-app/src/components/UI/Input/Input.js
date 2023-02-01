@@ -2,6 +2,7 @@ import React, { useRef, useImperativeHandle } from "react";
 
 import classes from "./Input.module.css";
 
+// eslint-disable-next-line react/display-name
 const Input = React.forwardRef((props, ref) => {
     const inputRef = useRef();
 

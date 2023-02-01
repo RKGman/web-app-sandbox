@@ -133,7 +133,7 @@ const Login = () => {
           </Button>
         </div>
         <div className={classes.actions}>
-          <GoogleLogin />
+          <GoogleLogin onSuccess={setFormIsValid}/>
         </div>
       </form>
     </Card>
